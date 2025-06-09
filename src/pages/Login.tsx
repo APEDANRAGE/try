@@ -12,8 +12,8 @@ import {
   IconButton,
 } from '@mui/material';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Email, Lock, Visibility, VisibilityOff, Login as LoginIcon } from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import { Email, Lock, Visibility, VisibilityOff, Login as LoginIcon, Sparkles } from '@mui/icons-material';
+import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:3001';
@@ -59,256 +59,309 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <Paper
-          elevation={0}
-          sx={{
-            p: 6,
-            background: 'linear-gradient(145deg, #1A1A1A 0%, #2A2A2A 100%)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: 4,
-            position: 'relative',
-            overflow: 'hidden',
-          }}
+    <Box className="auth-container" sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', py: 8 }}>
+      <Container maxWidth="sm">
+        <motion.div
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+          className="auth-form"
         >
-          <Box
+          <Paper
+            elevation={0}
             sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 4,
-              background: 'linear-gradient(135deg, #1A237E 0%, #00796B 50%, #FFB300 100%)',
+              p: 8,
+              background: 'linear-gradient(145deg, rgba(26, 27, 58, 0.9) 0%, rgba(30, 31, 67, 0.95) 100%)',
+              backdropFilter: 'blur(30px)',
+              border: '1px solid rgba(99, 102, 241, 0.3)',
+              borderRadius: 6,
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 32px 64px rgba(0, 0, 0, 0.3)',
             }}
-          />
-          
-          <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <Box
-                sx={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #1A237E 0%, #3F51B5 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 24px',
-                  boxShadow: '0 8px 32px rgba(26, 35, 126, 0.3)',
-                }}
-              >
-                <LoginIcon sx={{ fontSize: 40, color: 'white' }} />
-              </Box>
-            </motion.div>
-            <Typography
-              variant="h3"
-              gutterBottom
-              sx={{
-                fontWeight: 700,
-                background: 'linear-gradient(135deg, #E0E0E0 0%, #A0A0A0 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Welcome Back
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Sign in to your account to continue
-            </Typography>
-          </Box>
-
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Alert
-                severity="error"
-                sx={{
-                  mb: 3,
-                  background: 'rgba(244, 67, 54, 0.1)',
-                  border: '1px solid rgba(244, 67, 54, 0.3)',
-                  borderRadius: 2,
-                }}
-              >
-                {error}
-              </Alert>
-            </motion.div>
-          )}
-
-          <form onSubmit={handleSubmit}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <TextField
-                fullWidth
-                label="Email Address"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                margin="normal"
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Email sx={{ color: 'text.secondary' }} />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: 2,
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#1A237E',
-                      },
-                    },
-                    '&.Mui-focused': {
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#1A237E',
-                        borderWidth: 2,
-                      },
-                    },
-                  },
-                }}
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <TextField
-                fullWidth
-                label="Password"
-                type={showPassword ? 'text' : 'password'}
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                margin="normal"
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Lock sx={{ color: 'text.secondary' }} />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={() => setShowPassword(!showPassword)}
-                        edge="end"
-                        sx={{ color: 'text.secondary' }}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: 2,
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#1A237E',
-                      },
-                    },
-                    '&.Mui-focused': {
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#1A237E',
-                        borderWidth: 2,
-                      },
-                    },
-                  },
-                }}
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                disabled={loading}
-                sx={{
-                  mt: 4,
-                  mb: 2,
-                  py: 1.5,
-                  borderRadius: 2,
-                  background: 'linear-gradient(135deg, #1A237E 0%, #3F51B5 100%)',
-                  fontSize: '1.1rem',
-                  fontWeight: 600,
-                  textTransform: 'none',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  '&:hover': {
-                    background: 'linear-gradient(135deg, #0D47A1 0%, #1A237E 100%)',
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 8px 25px rgba(26, 35, 126, 0.4)',
-                  },
-                  '&:disabled': {
-                    background: 'rgba(255, 255, 255, 0.1)',
-                  },
-                }}
-              >
-                {loading ? (
-                  <CircularProgress size={24} sx={{ color: 'white' }} />
-                ) : (
-                  'Sign In'
-                )}
-              </Button>
-            </motion.div>
-          </form>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
           >
-            <Box sx={{ textAlign: 'center', mt: 3 }}>
-              <Typography variant="body2" color="text.secondary">
-                Don't have an account?{' '}
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 6,
+                background: 'linear-gradient(135deg, #6366F1 0%, #EC4899 50%, #10B981 100%)',
+              }}
+            />
+            
+            <Box sx={{ textAlign: 'center', mb: 6 }}>
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 200 }}
+              >
                 <Box
-                  component={RouterLink}
-                  to="/register"
                   sx={{
-                    color: '#1A237E',
-                    textDecoration: 'none',
-                    fontWeight: 600,
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      color: '#3F51B5',
-                      textDecoration: 'underline',
+                    width: 100,
+                    height: 100,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #6366F1 0%, #EC4899 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 32px',
+                    boxShadow: '0 16px 40px rgba(99, 102, 241, 0.4)',
+                    position: 'relative',
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      top: -4,
+                      left: -4,
+                      right: -4,
+                      bottom: -4,
+                      background: 'linear-gradient(135deg, #6366F1, #EC4899, #10B981)',
+                      borderRadius: '50%',
+                      zIndex: -1,
+                      animation: 'spin 3s linear infinite',
                     },
                   }}
                 >
-                  Create one here
+                  <LoginIcon sx={{ fontSize: 50, color: 'white' }} />
                 </Box>
-              </Typography>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
+                <Typography
+                  variant="h2"
+                  gutterBottom
+                  sx={{
+                    fontWeight: 800,
+                    background: 'linear-gradient(135deg, #F8FAFC 0%, #CBD5E1 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    mb: 2,
+                  }}
+                >
+                  Welcome Back! 🎬
+                </Typography>
+                <Typography variant="h6" color="text.secondary" sx={{ fontSize: '1.2rem' }}>
+                  Sign in to continue your video journey
+                </Typography>
+              </motion.div>
             </Box>
-          </motion.div>
-        </Paper>
-      </motion.div>
-    </Container>
+
+            <AnimatePresence>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <Alert
+                    severity="error"
+                    sx={{
+                      mb: 4,
+                      background: 'rgba(239, 68, 68, 0.1)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      borderRadius: 3,
+                      backdropFilter: 'blur(10px)',
+                    }}
+                  >
+                    {error}
+                  </Alert>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <form onSubmit={handleSubmit}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <TextField
+                  fullWidth
+                  label="Email Address"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  margin="normal"
+                  required
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Email sx={{ color: '#6366F1' }} />
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{
+                    mb: 3,
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 3,
+                      backgroundColor: 'rgba(99, 102, 241, 0.05)',
+                      transition: 'all 0.3s ease',
+                      '& fieldset': {
+                        borderColor: 'rgba(99, 102, 241, 0.3)',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#6366F1',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#6366F1',
+                        borderWidth: 2,
+                      },
+                    },
+                    '& .MuiInputLabel-root.Mui-focused': {
+                      color: '#6366F1',
+                    },
+                  }}
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+              >
+                <TextField
+                  fullWidth
+                  label="Password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  margin="normal"
+                  required
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Lock sx={{ color: '#6366F1' }} />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword(!showPassword)}
+                          edge="end"
+                          sx={{ color: '#6366F1' }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{
+                    mb: 4,
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 3,
+                      backgroundColor: 'rgba(99, 102, 241, 0.05)',
+                      transition: 'all 0.3s ease',
+                      '& fieldset': {
+                        borderColor: 'rgba(99, 102, 241, 0.3)',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#6366F1',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#6366F1',
+                        borderWidth: 2,
+                      },
+                    },
+                    '& .MuiInputLabel-root.Mui-focused': {
+                      color: '#6366F1',
+                    },
+                  }}
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  disabled={loading}
+                  sx={{
+                    mt: 2,
+                    mb: 3,
+                    py: 2,
+                    borderRadius: 3,
+                    background: 'linear-gradient(135deg, #6366F1 0%, #EC4899 100%)',
+                    fontSize: '1.2rem',
+                    fontWeight: 700,
+                    textTransform: 'none',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      top: 0,
+                      left: '-100%',
+                      width: '100%',
+                      height: '100%',
+                      background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
+                      transition: 'left 0.6s',
+                    },
+                    '&:hover': {
+                      background: 'linear-gradient(135deg, #4F46E5 0%, #DB2777 100%)',
+                      transform: 'translateY(-3px)',
+                      boxShadow: '0 16px 40px rgba(99, 102, 241, 0.4)',
+                      '&::before': {
+                        left: '100%',
+                      },
+                    },
+                    '&:disabled': {
+                      background: 'rgba(99, 102, 241, 0.3)',
+                    },
+                  }}
+                >
+                  {loading ? (
+                    <CircularProgress size={28} sx={{ color: 'white' }} />
+                  ) : (
+                    <>
+                      <Sparkles sx={{ mr: 1 }} />
+                      Sign In
+                    </>
+                  )}
+                </Button>
+              </motion.div>
+            </form>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+            >
+              <Box sx={{ textAlign: 'center', mt: 4 }}>
+                <Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.1rem' }}>
+                  Don't have an account?{' '}
+                  <Box
+                    component={RouterLink}
+                    to="/register"
+                    sx={{
+                      color: '#6366F1',
+                      textDecoration: 'none',
+                      fontWeight: 700,
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        color: '#EC4899',
+                        textDecoration: 'underline',
+                      },
+                    }}
+                  >
+                    Create one here ✨
+                  </Box>
+                </Typography>
+              </Box>
+            </motion.div>
+          </Paper>
+        </motion.div>
+      </Container>
+    </Box>
   );
 };
 

@@ -1,8 +1,8 @@
 import { AppBar, Toolbar, Typography, Button, Box, IconButton, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Menu as MenuIcon, VideoLibrary, Person, History, Favorite, Upload, Logout } from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import { Menu as MenuIcon, VideoLibrary, Person, History, Favorite, Upload, Logout, PlayCircle } from '@mui/icons-material';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -56,73 +56,86 @@ const Navbar = () => {
       position="sticky" 
       elevation={0}
       sx={{ 
-        background: 'linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 26, 26, 0.95) 100%)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        background: 'linear-gradient(135deg, rgba(15, 15, 35, 0.95) 0%, rgba(26, 27, 58, 0.95) 100%)',
+        backdropFilter: 'blur(30px)',
+        borderBottom: '1px solid rgba(99, 102, 241, 0.2)',
+        zIndex: 1100,
       }}
     >
-      <Toolbar sx={{ px: { xs: 2, md: 4 } }}>
+      <Toolbar sx={{ px: { xs: 2, md: 6 }, py: 1 }}>
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
+          style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}
         >
           <Typography
-            variant="h5"
+            variant="h4"
             component={RouterLink}
             to="/"
             sx={{ 
-              flexGrow: 1, 
               textDecoration: 'none', 
               color: 'inherit',
-              fontWeight: 700,
-              background: 'linear-gradient(135deg, #1A237E 0%, #00796B 50%, #FFB300 100%)',
+              fontWeight: 800,
+              background: 'linear-gradient(135deg, #6366F1 0%, #EC4899 50%, #10B981 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
               display: 'flex',
               alignItems: 'center',
-              gap: 1,
+              gap: 1.5,
               transition: 'all 0.3s ease',
               '&:hover': {
                 transform: 'scale(1.05)',
               }
             }}
           >
-            <VideoLibrary sx={{ color: '#1A237E', fontSize: 28 }} />
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            >
+              <PlayCircle sx={{ color: '#6366F1', fontSize: 36 }} />
+            </motion.div>
             VideoStream
           </Typography>
         </motion.div>
 
-        <Box sx={{ flexGrow: 1 }} />
-
         {isMobile ? (
           <>
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="menu"
-              onClick={handleMenuOpen}
-              sx={{
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'scale(1.1)',
-                  backgroundColor: 'rgba(26, 35, 126, 0.2)',
-                }
-              }}
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <MenuIcon />
-            </IconButton>
+              <IconButton
+                size="large"
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                onClick={handleMenuOpen}
+                sx={{
+                  background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(99, 102, 241, 0.3)',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%)',
+                    transform: 'scale(1.1)',
+                  }
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </motion.div>
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
               PaperProps={{
                 sx: {
-                  background: 'linear-gradient(145deg, #1A1A1A 0%, #2A2A2A 100%)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: 'linear-gradient(145deg, rgba(26, 27, 58, 0.95) 0%, rgba(30, 31, 67, 0.95) 100%)',
+                  backdropFilter: 'blur(30px)',
+                  border: '1px solid rgba(99, 102, 241, 0.3)',
+                  borderRadius: 3,
                   mt: 1,
                 }
               }}
@@ -138,9 +151,11 @@ const Navbar = () => {
                       }}
                       sx={{
                         gap: 2,
+                        py: 1.5,
+                        px: 3,
                         transition: 'all 0.3s ease',
                         '&:hover': {
-                          backgroundColor: 'rgba(26, 35, 126, 0.2)',
+                          backgroundColor: 'rgba(99, 102, 241, 0.2)',
                           transform: 'translateX(8px)',
                         }
                       }}
@@ -154,10 +169,12 @@ const Navbar = () => {
                     onClick={handleLogout}
                     sx={{
                       gap: 2,
+                      py: 1.5,
+                      px: 3,
                       color: 'error.main',
                       transition: 'all 0.3s ease',
                       '&:hover': {
-                        backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         transform: 'translateX(8px)',
                       }
                     }}
@@ -175,9 +192,11 @@ const Navbar = () => {
                       handleMenuClose();
                     }}
                     sx={{
+                      py: 1.5,
+                      px: 3,
                       transition: 'all 0.3s ease',
                       '&:hover': {
-                        backgroundColor: 'rgba(26, 35, 126, 0.2)',
+                        backgroundColor: 'rgba(99, 102, 241, 0.2)',
                         transform: 'translateX(8px)',
                       }
                     }}
@@ -191,9 +210,11 @@ const Navbar = () => {
                       handleMenuClose();
                     }}
                     sx={{
+                      py: 1.5,
+                      px: 3,
                       transition: 'all 0.3s ease',
                       '&:hover': {
-                        backgroundColor: 'rgba(26, 35, 126, 0.2)',
+                        backgroundColor: 'rgba(99, 102, 241, 0.2)',
                         transform: 'translateX(8px)',
                       }
                     }}
@@ -205,7 +226,7 @@ const Navbar = () => {
             </Menu>
           </>
         ) : (
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ display: 'flex', gap: 2 }}>
             {isAuthenticated ? (
               <>
                 {navItems.map((item, index) => (
@@ -214,20 +235,27 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{ y: -2 }}
                   >
                     <Button
                       color="inherit"
                       component={RouterLink}
                       to={item.path}
                       startIcon={item.icon}
+                      className="nav-item"
                       sx={{
                         mx: 0.5,
-                        borderRadius: 2,
+                        px: 3,
+                        py: 1,
+                        borderRadius: 3,
+                        fontWeight: 600,
+                        fontSize: '1rem',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        position: 'relative',
                         '&:hover': {
-                          backgroundColor: 'rgba(26, 35, 126, 0.2)',
+                          backgroundColor: 'rgba(99, 102, 241, 0.2)',
                           transform: 'translateY(-2px)',
-                          boxShadow: '0 4px 12px rgba(26, 35, 126, 0.3)',
+                          boxShadow: '0 8px 25px rgba(99, 102, 241, 0.3)',
                         }
                       }}
                     >
@@ -239,6 +267,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.5 }}
+                  whileHover={{ y: -2 }}
                 >
                   <Button
                     color="error"
@@ -246,12 +275,16 @@ const Navbar = () => {
                     startIcon={<Logout />}
                     sx={{
                       mx: 0.5,
-                      borderRadius: 2,
+                      px: 3,
+                      py: 1,
+                      borderRadius: 3,
+                      fontWeight: 600,
+                      fontSize: '1rem',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       '&:hover': {
-                        backgroundColor: 'rgba(244, 67, 54, 0.2)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.2)',
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 4px 12px rgba(244, 67, 54, 0.3)',
+                        boxShadow: '0 8px 25px rgba(239, 68, 68, 0.3)',
                       }
                     }}
                   >
@@ -265,19 +298,24 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
+                  whileHover={{ y: -2 }}
                 >
                   <Button
                     color="inherit"
                     component={RouterLink}
                     to="/login"
                     sx={{
-                      mx: 0.5,
-                      borderRadius: 2,
+                      mx: 1,
+                      px: 4,
+                      py: 1.5,
+                      borderRadius: 3,
+                      fontWeight: 600,
+                      fontSize: '1rem',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       '&:hover': {
-                        backgroundColor: 'rgba(26, 35, 126, 0.2)',
+                        backgroundColor: 'rgba(99, 102, 241, 0.2)',
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 4px 12px rgba(26, 35, 126, 0.3)',
+                        boxShadow: '0 8px 25px rgba(99, 102, 241, 0.3)',
                       }
                     }}
                     onClick={triggerAuthChange}
@@ -289,20 +327,25 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
+                  whileHover={{ y: -2 }}
                 >
                   <Button
                     variant="contained"
                     component={RouterLink}
                     to="/register"
                     sx={{
-                      mx: 0.5,
-                      borderRadius: 2,
-                      background: 'linear-gradient(135deg, #1A237E 0%, #3F51B5 100%)',
+                      mx: 1,
+                      px: 4,
+                      py: 1.5,
+                      borderRadius: 3,
+                      fontWeight: 700,
+                      fontSize: '1rem',
+                      background: 'linear-gradient(135deg, #6366F1 0%, #EC4899 100%)',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       '&:hover': {
-                        background: 'linear-gradient(135deg, #0D47A1 0%, #1A237E 100%)',
+                        background: 'linear-gradient(135deg, #4F46E5 0%, #DB2777 100%)',
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 8px 25px rgba(26, 35, 126, 0.4)',
+                        boxShadow: '0 12px 32px rgba(99, 102, 241, 0.4)',
                       }
                     }}
                     onClick={triggerAuthChange}

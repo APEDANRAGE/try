@@ -16,51 +16,51 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#1A237E',
-      light: '#3F51B5',
-      dark: '#0D47A1',
+      main: '#6366F1',
+      light: '#818CF8',
+      dark: '#4F46E5',
       contrastText: '#FFFFFF',
     },
     secondary: {
-      main: '#00796B',
-      light: '#4DB6AC',
-      dark: '#004D40',
+      main: '#EC4899',
+      light: '#F472B6',
+      dark: '#DB2777',
       contrastText: '#FFFFFF',
     },
     background: {
-      default: '#0A0A0A',
-      paper: '#1A1A1A',
+      default: '#0F0F23',
+      paper: '#1A1B3A',
     },
     text: {
-      primary: '#E0E0E0',
-      secondary: '#A0A0A0',
+      primary: '#F8FAFC',
+      secondary: '#CBD5E1',
     },
     error: {
-      main: '#F44336',
+      main: '#EF4444',
     },
     warning: {
-      main: '#FFB300',
+      main: '#F59E0B',
     },
     success: {
-      main: '#4CAF50',
+      main: '#10B981',
     },
   },
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
+      fontWeight: 800,
+      fontSize: '4rem',
+      lineHeight: 1.1,
+      letterSpacing: '-0.025em',
+    },
+    h2: {
       fontWeight: 700,
-      fontSize: '3.5rem',
+      fontSize: '3rem',
       lineHeight: 1.2,
       letterSpacing: '-0.02em',
     },
-    h2: {
-      fontWeight: 600,
-      fontSize: '2.75rem',
-      lineHeight: 1.2,
-      letterSpacing: '-0.01em',
-    },
     h3: {
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: '2.25rem',
       lineHeight: 1.3,
     },
@@ -89,20 +89,38 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 12,
+    borderRadius: 16,
   },
   components: {
     MuiCard: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(145deg, #1E1E1E 0%, #2A2A2A 100%)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          background: 'linear-gradient(145deg, rgba(26, 27, 58, 0.8) 0%, rgba(30, 31, 67, 0.9) 100%)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(99, 102, 241, 0.2)',
+          borderRadius: 20,
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          position: 'relative',
+          overflow: 'hidden',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(45deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%)',
+            opacity: 0,
+            transition: 'opacity 0.3s ease',
+            zIndex: 1,
+          },
           '&:hover': {
-            transform: 'translateY(-4px)',
-            boxShadow: '0 20px 40px rgba(26, 35, 126, 0.3)',
-            border: '1px solid rgba(26, 35, 126, 0.3)',
+            transform: 'translateY(-12px) scale(1.02)',
+            boxShadow: '0 32px 64px rgba(99, 102, 241, 0.3), 0 0 0 1px rgba(99, 102, 241, 0.4)',
+            border: '1px solid rgba(99, 102, 241, 0.5)',
+            '&::before': {
+              opacity: 1,
+            },
           },
         },
       },
@@ -112,18 +130,37 @@ const theme = createTheme({
         root: {
           textTransform: 'none',
           fontWeight: 600,
-          borderRadius: 8,
-          padding: '12px 24px',
+          borderRadius: 12,
+          padding: '14px 28px',
+          fontSize: '1rem',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          position: 'relative',
+          overflow: 'hidden',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: '-100%',
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
+            transition: 'left 0.6s',
+          },
           '&:hover': {
-            transform: 'translateY(-2px)',
-            boxShadow: '0 8px 25px rgba(26, 35, 126, 0.4)',
+            transform: 'translateY(-3px)',
+            boxShadow: '0 12px 32px rgba(99, 102, 241, 0.4)',
+            '&::before': {
+              left: '100%',
+            },
+          },
+          '&:active': {
+            transform: 'translateY(-1px)',
           },
         },
         contained: {
-          background: 'linear-gradient(135deg, #1A237E 0%, #3F51B5 100%)',
+          background: 'linear-gradient(135deg, #6366F1 0%, #EC4899 100%)',
           '&:hover': {
-            background: 'linear-gradient(135deg, #0D47A1 0%, #1A237E 100%)',
+            background: 'linear-gradient(135deg, #4F46E5 0%, #DB2777 100%)',
           },
         },
       },
@@ -131,18 +168,19 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(145deg, #1A1A1A 0%, #2A2A2A 100%)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: 'linear-gradient(145deg, rgba(26, 27, 58, 0.9) 0%, rgba(30, 31, 67, 0.95) 100%)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(99, 102, 241, 0.2)',
+          borderRadius: 20,
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%)',
-          backdropFilter: 'blur(20px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          background: 'linear-gradient(135deg, rgba(15, 15, 35, 0.95) 0%, rgba(26, 27, 58, 0.95) 100%)',
+          backdropFilter: 'blur(30px)',
+          borderBottom: '1px solid rgba(99, 102, 241, 0.2)',
         },
       },
     },
@@ -161,7 +199,7 @@ function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
             >
               <Routes>
                 <Route path="/" element={<Home />} />
