@@ -326,7 +326,7 @@ const Home = () => {
 
   if (loading) {
     return (
-      <Box className="container-wide" sx={{ mt: 6, px: { xs: 2, md: 4 } }}>
+      <Box className="container-wide\" sx={{ mt: 6, px: { xs: 2, md: 4 } }}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
