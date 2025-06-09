@@ -1,0 +1,16 @@
+.video-thumbnail.show {
+  opacity: 1;
+  transition: opacity 0.7s;
+}
+.video-thumbnail.hide {
+  opacity: 0;
+  transition: opacity 0.7s;
+}
+.video-player.show {
+  opacity: 1;
+  transition: opacity 0.7s;
+}
+.video-player.hide {
+  opacity: 0;
+  transition: opacity 0.7s;
+} 
